@@ -814,7 +814,14 @@ function startParticleHeart() {
   // render that thing!
   function render() {
     // next animation frame
-    requestAnimationFrame(render);
+    if (!window.heartEffectStartTime) window.heartEffectStartTime = Date.now();
+    if (Date.now() - window.heartEffectStartTime < 30000) {
+      requestAnimationFrame(render);
+    } else {
+      // After 30s, stop animation and clear canvas
+      context.clearRect(0, 0, pinkboard.width, pinkboard.height);
+      pinkboard.style.display = "none";
+    }
 
     // update time
     const newTime = new Date().getTime() / 1000;
@@ -1061,8 +1068,10 @@ function addHeartSparkles() {
     animateHeartSparkle();
   }
 
-  // Create sparkles continuously
+  // Create sparkles continuously, but auto-cleanup after 30s
+  let sparkleActive = true;
   const heartSparkleInterval = setInterval(() => {
+    if (!sparkleActive) return;
     // Create 2-4 sparkles at once
     const count = 2 + Math.floor(Math.random() * 3);
     for (let i = 0; i < count; i++) {
@@ -1070,8 +1079,14 @@ function addHeartSparkles() {
     }
   }, 300);
 
-  // Lấp lánh vĩnh viễn - không cleanup
-  // heartSparkleInterval sẽ chạy mãi mãi
+  // Auto-stop sparkles after 30s to prevent lag
+  setTimeout(() => {
+    sparkleActive = false;
+    clearInterval(heartSparkleInterval);
+    // Remove sparkles from DOM
+    const sparkleContainer = document.getElementById("heartSparkleContainer");
+    if (sparkleContainer) sparkleContainer.innerHTML = "";
+  }, 30000);
 }
 
 // Text morphing
