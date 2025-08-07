@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debug LocalStorage</title>
+  </head>
+  <body>
+    <h1>Debug LocalStorage</h1>
+    <div id="output"></div>
+
+    <script>
+      console.log("🔍 Starting debug...");
+
+      // Get URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const output = document.getElementById("output");
+
+      let debugInfo = "<h2>URL Parameters:</h2>";
+      for (let [key, value] of urlParams) {
+        debugInfo += `<p><strong>${key}:</strong> ${value}</p>`;
+      }
+
+      debugInfo += "<h2>All localStorage keys:</h2>";
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        const value = localStorage.getItem(key);
+        debugInfo += `<p><strong>${key}:</strong><br><pre>${value}</pre></p>`;
+      }
+
+      if (urlParams.has("id")) {
+        const paramId = urlParams.get("id");
+        const localKey = `data_${paramId}`;
+        const data = localStorage.getItem(localKey);
+
+        debugInfo += "<h2>Specific Data for ID:</h2>";
+        debugInfo += `<p><strong>Looking for key:</strong> ${localKey}</p>`;
+        debugInfo += `<p><strong>Found data:</strong><br><pre>${
+          data || "NO DATA FOUND"
+        }</pre></p>`;
+
+        if (data) {
+          try {
+            const parsed = JSON.parse(data);
+            debugInfo += `<p><strong>Parsed data:</strong><br><pre>${JSON.stringify(
+              parsed,
+              null,
+              2
+            )}</pre></p>`;
+          } catch (error) {
+            debugInfo += `<p><strong>Parse error:</strong> ${error.message}</p>`;
+          }
+        }
+      }
+
+      output.innerHTML = debugInfo;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Website rainlove - nơi chia sẻ tình yêu thương."
+    />
+    <title>Textlove</title>
+    <link
+      rel="icon"
+      href="https://github.com/Panbap/anh/blob/main/icon1.png?raw=true"
+      type="image/png"
+    />
+    <!-- Enhanced fonts for better mobile readability -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Pacifico&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body {
+        font-family: "Inter", "Quicksand", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        margin: 0;
+        overflow: hidden;
+        background: #000;
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+        color: white;
+        -webkit-text-size-adjust: none;
+        -moz-text-size-adjust: none;
+        text-size-adjust: none;
+      }
+
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        image-rendering: optimizeSpeed;
+      }
+
+      /* Mobile optimizations */
+      @media (max-width: 768px) {
+        body {
+          overflow-x: hidden;
+        }
+
+        canvas {
+          image-rendering: -moz-crisp-edges;
+          image-rendering: -webkit-optimize-contrast;
+          image-rendering: optimize-contrast;
+        }
+
+        #sticker {
+          width: 90vw !important;
+          max-width: 350px !important;
+          height: auto !important;
+        }
+      }
+
+      /* Landscape mode for mobile */
+      @media (max-width: 768px) and (orientation: landscape) {
+        #sticker {
+          width: 60vh !important;
+          max-width: 300px !important;
+        }
+      }
+
+      #sticker {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 450px;
+        height: auto;
+        z-index: 10;
+        pointer-events: none;
+      }
+
+      #pinkboard {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9;
+        pointer-events: none;
+      }
+
+      audio {
+        display: none;
+      }
+
+      #bigHeart {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 220px;
+        height: 200px;
+        transform: translate(-50%, -50%);
+        z-index: 20;
+        pointer-events: none;
+        animation: heartBeat 1.3s infinite;
+      }
+      #bigHeart:before,
+      #bigHeart:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 110px;
+        width: 110px;
+        height: 180px;
+        background: #ff5ca4;
+        border-top-left-radius: 55px;
+        border-top-right-radius: 55px;
+      }
+      #bigHeart:before {
+        left: 0;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15),
+          0 10px 10px rgba(0, 0, 0, 0.12);
+      }
+      #bigHeart:after {
+        left: 110px;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+      }
+      @keyframes heartBeat {
+        0% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        30% {
+          transform: translate(-50%, -50%) scale(0.85);
+        }
+        60% {
+          transform: translate(-50%, -50%) scale(1.15);
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      @media (max-width: 768px) {
+        #sticker {
+          width: 300px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <canvas id="rainCanvas" width="500" height="500"></canvas>
+    <canvas id="pinkboard"></canvas>
+    <audio id="audio" controls>
+      <source src="" type="audio/mpeg" />
+    </audio>
+    <div id="sticker">
+      <img id="gif-sticker" alt="sticker" />
+    </div>
+    <div id="bigHeart"></div>
+
+    <script src="assets/lz-string.min.js"></script>
+    <script>
+      // Đọc dữ liệu cá nhân hóa từ URL (tham số 'data')
+      function getPersonalData() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.has("data") && window.LZString) {
+          try {
+            const compressed = params.get("data");
+            const json = LZString.decompressFromBase64(
+              decodeURIComponent(compressed)
+            );
+            if (json) return JSON.parse(json);
+          } catch (e) {
+            console.error("Lỗi giải nén dữ liệu:", e);
+          }
+        }
+        return null;
+      }
+
+      // Ví dụ: sử dụng dữ liệu cá nhân hóa để hiển thị
+      const personalData = getPersonalData();
+      if (personalData) {
+        // Bạn có thể dùng personalData.msg, personalData.gif, personalData.music, personalData.heartText
+        console.log("🎉 Dữ liệu cá nhân hóa:", personalData);
+        // TODO: Hiển thị lên giao diện theo ý bạn
+      } else {
+        console.log("Không có dữ liệu cá nhân hóa hoặc không đọc được.");
+      }
+
+      // ...existing code...
+      // Rain canvas setup
+      const canva = document.getElementById("rainCanvas");
+      const ctxs = canva.getContext("2d");
+
+      const fontSize = 16;
+      const rainText = "HAPPY BIRTH DAY";
+      let columns = Math.floor(window.innerWidth / fontSize);
+      const drops = Array(columns).fill(1);
+      const letters = rainText.split("");
+
+      function resizeCanvas() {
+        canva.width = window.innerWidth;
+        canva.height = window.innerHeight;
+        columns = Math.floor(canva.width / fontSize);
+        drops.length = columns;
+        drops.fill(1);
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      function drawRainBackground() {
+        ctxs.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctxs.fillRect(0, 0, canva.width, canva.height);
+        ctxs.fillStyle = "#f584b7";
+        ctxs.font = fontSize + "px arial";
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = letters[Math.floor(Math.random() * letters.length)];
+          ctxs.fillText(text, i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > canva.height || Math.random() > 0.95)
+            drops[i] = 0;
+          drops[i]++;
+        }
+      }
+
+      setInterval(drawRainBackground, 50);
+    </script>
+
+    <script src="assets/rainlove-tim-exact.js?v=1"></script>
+  </body>
+</html>

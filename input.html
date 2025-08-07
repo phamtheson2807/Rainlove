@@ -1,0 +1,2695 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Website rainlove - nơi chia sẻ tình yêu thương."
+    />
+    <title>💕 Nhập lời chúc dễ thương</title>
+    <link
+      rel="icon"
+      href="https://github.com/Panbap/anh/blob/main/icon1.png?raw=true"
+      type="image/png"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <!-- QRCode with multiple fallbacks -->
+    <script>
+      // QRCode loading with multiple sources
+      function loadQRCodeLibrary() {
+        const sources = [
+          "https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js",
+          "https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js",
+          "./assets/qrcode.min.js", // Local fallback
+        ];
+
+        let currentIndex = 0;
+
+        function tryLoadSource() {
+          if (currentIndex >= sources.length) {
+            console.warn("All QRCode sources failed, using manual fallback");
+            window.QRCodeFallback = true;
+            return;
+          }
+
+          const script = document.createElement("script");
+          script.src = sources[currentIndex];
+          script.onload = function () {
+            console.log(`✅ QRCode loaded from: ${sources[currentIndex]}`);
+          };
+          script.onerror = function () {
+            console.warn(
+              `❌ Failed to load QRCode from: ${sources[currentIndex]}`
+            );
+            currentIndex++;
+            tryLoadSource();
+          };
+          document.head.appendChild(script);
+        }
+
+        tryLoadSource();
+      }
+
+      // Load immediately
+      loadQRCodeLibrary();
+    </script>
+    <style>
+      /* Import Google Fonts */
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Pacifico&display=swap");
+
+      /* Modern CSS Reset and Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        font-family: "Quicksand", sans-serif;
+        line-height: 1.6;
+        color: #444;
+        background: linear-gradient(
+          135deg,
+          #ffeef8 0%,
+          #f0e6ff 30%,
+          #e6f3ff 70%,
+          #fff0f5 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Cute floating elements */
+      .floating-hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .floating-heart {
+        position: absolute;
+        color: rgba(255, 182, 193, 0.4);
+        font-size: 20px;
+        animation: floatUp 8s linear infinite;
+        opacity: 0;
+      }
+
+      @keyframes floatUp {
+        0% {
+          opacity: 0;
+          transform: translateY(100vh) rotate(0deg);
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-100px) rotate(360deg);
+        }
+      }
+
+      /* Cute clouds */
+      .cloud {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 50px;
+        opacity: 0.8;
+        animation: cloudFloat 20s linear infinite;
+      }
+
+      .cloud::before,
+      .cloud::after {
+        content: "";
+        position: absolute;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 50px;
+      }
+
+      .cloud1 {
+        width: 80px;
+        height: 30px;
+        top: 20%;
+        left: -100px;
+        animation-delay: 0s;
+      }
+
+      .cloud1::before {
+        width: 40px;
+        height: 40px;
+        top: -20px;
+        left: 10px;
+      }
+
+      .cloud1::after {
+        width: 60px;
+        height: 35px;
+        top: -15px;
+        right: 10px;
+      }
+
+      .cloud2 {
+        width: 60px;
+        height: 25px;
+        top: 60%;
+        left: -80px;
+        animation-delay: -10s;
+      }
+
+      .cloud2::before {
+        width: 30px;
+        height: 30px;
+        top: -15px;
+        left: 8px;
+      }
+
+      .cloud2::after {
+        width: 45px;
+        height: 28px;
+        top: -12px;
+        right: 8px;
+      }
+
+      @keyframes cloudFloat {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(calc(100vw + 200px));
+        }
+      }
+
+      /* Loading screen */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(
+          135deg,
+          #ffeef8 0%,
+          #f0e6ff 50%,
+          #e6f3ff 100%
+        );
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        flex-direction: column;
+      }
+
+      .cute-spinner {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        margin-bottom: 30px;
+      }
+
+      .cute-spinner::before {
+        content: "💖";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 40px;
+        animation: heartBeat 1.5s ease-in-out infinite;
+      }
+
+      .cute-spinner::after {
+        content: "";
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        border: 3px solid transparent;
+        border-top: 3px solid #ff9ec7;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes heartBeat {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading-text {
+        color: #ff69b4;
+        font-size: 20px;
+        font-weight: 600;
+        font-family: "Pacifico", cursive;
+        text-align: center;
+      }
+
+      /* Main container */
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Header */
+      .header {
+        text-align: center;
+        margin-bottom: 50px;
+        position: relative;
+      }
+
+      .header h1 {
+        font-family: "Pacifico", cursive;
+        font-size: 3.5rem;
+        color: #ff69b4;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+        position: relative;
+        display: inline-block;
+      }
+
+      .header h1::before {
+        content: "✨";
+        position: absolute;
+        left: -60px;
+        top: 10px;
+        font-size: 2rem;
+        animation: twinkle 2s ease-in-out infinite;
+      }
+
+      .header h1::after {
+        content: "✨";
+        position: absolute;
+        right: -60px;
+        top: 10px;
+        font-size: 2rem;
+        animation: twinkle 2s ease-in-out infinite 1s;
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+      }
+
+      .header p {
+        font-size: 1.3rem;
+        color: #8e44ad;
+        font-weight: 500;
+        background: linear-gradient(45deg, #ff69b4, #8e44ad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Card design */
+      .form-card {
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 240, 245, 0.8)
+        );
+        backdrop-filter: blur(20px);
+        border-radius: 30px;
+        padding: 45px;
+        box-shadow: 0 20px 60px rgba(255, 105, 180, 0.1),
+          0 0 0 1px rgba(255, 182, 193, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        border: 2px solid rgba(255, 182, 193, 0.3);
+        margin-bottom: 30px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .form-card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 182, 193, 0.1) 0%,
+          transparent 50%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .form-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 30px 80px rgba(255, 105, 180, 0.2),
+          0 0 0 1px rgba(255, 182, 193, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 1);
+      }
+
+      .form-card:hover::before {
+        opacity: 1;
+      }
+
+      /* Form groups */
+      .form-group {
+        margin-bottom: 35px;
+        position: relative;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 12px;
+        position: relative;
+        padding-left: 35px;
+      }
+
+      .form-group label::before {
+        content: attr(data-icon);
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #ff9ec7, #ffc3e1);
+        border-radius: 50%;
+        box-shadow: 0 4px 15px rgba(255, 158, 199, 0.3);
+      }
+
+      .form-help {
+        font-size: 0.95rem;
+        color: #7f8c8d;
+        margin-bottom: 15px;
+        padding: 12px 18px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 240, 245, 0.8),
+          rgba(240, 230, 255, 0.6)
+        );
+        border-radius: 15px;
+        border-left: 4px solid #ff9ec7;
+        position: relative;
+        box-shadow: 0 4px 15px rgba(255, 158, 199, 0.1);
+      }
+
+      .form-help::before {
+        content: "💡";
+        position: absolute;
+        left: -2px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2rem;
+        background: white;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(255, 158, 199, 0.3);
+      }
+
+      /* Input styles */
+      textarea,
+      input[type="text"],
+      select {
+        width: 100%;
+        padding: 18px 24px;
+        border: 2px solid rgba(255, 182, 193, 0.3);
+        border-radius: 20px;
+        font-size: 1rem;
+        font-family: inherit;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 250, 252, 0.8)
+        );
+        resize: vertical;
+        color: #2c3e50;
+        box-shadow: inset 0 2px 5px rgba(255, 182, 193, 0.1);
+      }
+
+      textarea:focus,
+      input[type="text"]:focus,
+      select:focus {
+        outline: none;
+        border-color: #ff69b4;
+        box-shadow: 0 0 25px rgba(255, 105, 180, 0.2),
+          inset 0 2px 5px rgba(255, 182, 193, 0.15);
+        transform: translateY(-2px);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 1),
+          rgba(255, 245, 250, 0.9)
+        );
+      }
+
+      textarea {
+        min-height: 140px;
+        line-height: 1.6;
+      }
+
+      /* Select dropdown */
+      select {
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ff69b4' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 16px center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        padding-right: 55px;
+        appearance: none;
+      }
+
+      /* Preview sections */
+      .preview-section {
+        margin-top: 25px;
+        padding: 25px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 240, 245, 0.6),
+          rgba(240, 230, 255, 0.4)
+        );
+        border-radius: 20px;
+        border: 2px dashed rgba(255, 182, 193, 0.4);
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .preview-section::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 105, 180, 0.05) 0%,
+          transparent 50%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .preview-section.active {
+        border-color: #ff69b4;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 240, 245, 0.8),
+          rgba(240, 230, 255, 0.6)
+        );
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(255, 105, 180, 0.15);
+      }
+
+      .preview-section.active::before {
+        opacity: 1;
+      }
+
+      .preview-section h4 {
+        color: #ff69b4;
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        font-family: "Pacifico", cursive;
+      }
+
+      .heart-container {
+        display: inline-block;
+        position: relative;
+        width: 400px;
+        height: 300px;
+        background: linear-gradient(135deg, #1a1a2e, #16213e);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
+          0 0 0 3px rgba(255, 182, 193, 0.3);
+        border: 3px solid rgba(255, 182, 193, 0.4);
+      }
+
+      #pinkboard {
+        width: 100%;
+        height: 100%;
+      }
+
+      .heart-text-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ff1493;
+        font-size: 1.6rem;
+        font-weight: 700;
+        text-align: center;
+        z-index: 10;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8),
+          0 0 20px rgba(255, 20, 147, 0.6);
+        max-width: 300px;
+        word-wrap: break-word;
+        font-family: "Pacifico", cursive;
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 36px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 25px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+        min-width: 180px;
+        font-family: "Quicksand", sans-serif;
+        text-transform: none;
+        letter-spacing: 0.5px;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        transition: all 0.4s ease;
+        transform: translate(-50%, -50%);
+      }
+
+      .btn:hover::before {
+        width: 300px;
+        height: 300px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          #ff9ec7 0%,
+          #ff69b4 50%,
+          #e91e63 100%
+        );
+        color: white;
+        box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4),
+          0 0 0 0 rgba(255, 105, 180, 0.2);
+        position: relative;
+        z-index: 1;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 15px 40px rgba(255, 105, 180, 0.5),
+          0 0 0 8px rgba(255, 105, 180, 0.1);
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #ff9ec7, #4caf50);
+        color: white;
+        margin-top: 20px;
+      }
+
+      .btn-info {
+        background: linear-gradient(135deg, #ff9ec7, #17a2b8);
+        color: white;
+      }
+
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      /* Progress bar */
+      .progress-container {
+        margin: 35px 0;
+        padding: 30px;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 240, 245, 0.8)
+        );
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(255, 105, 180, 0.1);
+        border: 2px solid rgba(255, 182, 193, 0.2);
+      }
+
+      .progress-bar-wrapper {
+        background: rgba(255, 182, 193, 0.2);
+        height: 12px;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        position: relative;
+      }
+
+      .progress-bar-wrapper::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.3) 50%,
+          transparent 100%
+        );
+        animation: progressShimmer 2s infinite;
+      }
+
+      @keyframes progressShimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #ff9ec7, #ff69b4, #e91e63);
+        border-radius: 15px;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .progress-bar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 50px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.6)
+        );
+        animation: shimmer 2s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      .progress-text {
+        text-align: center;
+        color: #ff69b4;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      /* Result sections */
+      .result-card {
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.95),
+          rgba(240, 255, 240, 0.8)
+        );
+        border-radius: 20px;
+        padding: 35px;
+        margin: 25px 0;
+        box-shadow: 0 15px 40px rgba(76, 175, 80, 0.1);
+        border: 2px solid rgba(76, 175, 80, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .result-card::before {
+        content: "🎉";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 2rem;
+        animation: celebrate 2s ease-in-out infinite;
+      }
+
+      @keyframes celebrate {
+        0%,
+        100% {
+          transform: rotate(-10deg) scale(1);
+        }
+        50% {
+          transform: rotate(10deg) scale(1.1);
+        }
+      }
+
+      .result-card h3 {
+        color: #4caf50;
+        margin-bottom: 25px;
+        font-size: 1.6rem;
+        font-family: "Pacifico", cursive;
+      }
+
+      .link-display {
+        background: linear-gradient(
+          135deg,
+          rgba(245, 245, 245, 0.8),
+          rgba(248, 249, 250, 0.6)
+        );
+        padding: 18px 22px;
+        border-radius: 15px;
+        margin: 18px 0;
+        word-break: break-all;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: 0.95rem;
+        border: 2px solid rgba(255, 182, 193, 0.2);
+        box-shadow: inset 0 2px 5px rgba(255, 182, 193, 0.1);
+      }
+
+      .qr-section {
+        text-align: center;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 240, 245, 0.8)
+        );
+        border-radius: 20px;
+        padding: 35px;
+        margin: 25px 0;
+        box-shadow: 0 15px 40px rgba(255, 105, 180, 0.1);
+        border: 2px solid rgba(255, 182, 193, 0.2);
+      }
+
+      .qr-section h4 {
+        margin-bottom: 25px;
+        color: #ff69b4;
+        font-size: 1.5rem;
+        font-family: "Pacifico", cursive;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px 15px;
+        }
+
+        .form-card {
+          padding: 30px 25px;
+          margin: 0 10px 20px;
+        }
+
+        .header h1 {
+          font-size: 2.8rem;
+        }
+
+        .header h1::before,
+        .header h1::after {
+          display: none;
+        }
+
+        .heart-container {
+          width: 100%;
+          max-width: 350px;
+          height: 250px;
+        }
+
+        .btn {
+          padding: 16px 28px;
+          font-size: 1rem;
+        }
+      }
+
+      /* Button animations */
+      @keyframes buttonSpin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .spinner-icon {
+        display: inline-block;
+        animation: buttonSpin 1s linear infinite;
+        margin-right: 10px;
+      }
+
+      /* Copy button specific styles */
+      #copyLinkButton {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      #copyLinkButton:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+      }
+
+      #copyLinkButton:active {
+        transform: translateY(0);
+        transition: all 0.1s ease;
+      }
+
+      /* Button container styles */
+      .button-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      @media (max-width: 480px) {
+        .button-group {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .button-group .btn {
+          width: 100%;
+          max-width: 250px;
+        }
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 40px;
+        color: #ff69b4;
+        font-size: 1rem;
+        font-family: "Pacifico", cursive;
+        position: relative;
+      }
+
+      footer::before {
+        content: "💕";
+        position: absolute;
+        left: 50%;
+        top: 10px;
+        transform: translateX(-50%);
+        font-size: 2rem;
+        animation: heartFloat 3s ease-in-out infinite;
+      }
+
+      @keyframes heartFloat {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 182, 193, 0.1);
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #ff9ec7, #ff69b4);
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #ff69b4, #e91e63);
+      }
+
+      /* Sparkle Heart Effect Styles */
+      #sparkleHeartCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9999;
+        pointer-events: none;
+        display: none;
+      }
+
+      .sparkle-heart-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10000;
+        pointer-events: none;
+        display: none;
+      }
+
+      .sparkle-heart-main {
+        width: 200px;
+        height: 180px;
+        position: relative;
+        animation: heartBeatSparkle 1.3s infinite;
+      }
+
+      .sparkle-heart-main:before,
+      .sparkle-heart-main:after {
+        content: "";
+        position: absolute;
+        background: #ff5ca4;
+        width: 100px;
+        height: 160px;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+      }
+
+      .sparkle-heart-main:before {
+        left: 0;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+          0 10px 10px rgba(0, 0, 0, 0.22);
+      }
+
+      .sparkle-heart-main:after {
+        left: 100px;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+      }
+
+      @keyframes heartBeatSparkle {
+        0% {
+          transform: scale(1);
+        }
+        30% {
+          transform: scale(0.8);
+        }
+        60% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Sparkle particles */
+      .sparkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #ffd700;
+        border-radius: 50%;
+        animation: sparkleMove 3s linear infinite;
+      }
+
+      .sparkle.pink {
+        background: #ff69b4;
+      }
+
+      .sparkle.blue {
+        background: #87ceeb;
+      }
+
+      .sparkle.white {
+        background: #ffffff;
+        box-shadow: 0 0 6px #ffffff;
+      }
+
+      @keyframes sparkleMove {
+        0% {
+          opacity: 1;
+          transform: translateY(0) scale(0);
+        }
+        10% {
+          opacity: 1;
+          transform: translateY(-20px) scale(1);
+        }
+        90% {
+          opacity: 1;
+          transform: translateY(-400px) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-500px) scale(0);
+        }
+      }
+
+      .sparkle-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ff1493;
+        font-size: 24px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        font-family: "Pacifico", cursive;
+        z-index: 10001;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Floating hearts background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Cute clouds -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+    <!-- Loading screen -->
+    <div id="loading-screen">
+      <div class="cute-spinner"></div>
+      <div class="loading-text">Đang chuẩn bị điều kỳ diệu...</div>
+    </div>
+
+    <!-- Main container -->
+    <div class="container" style="display: none">
+      <!-- Header -->
+      <div class="header">
+        <h1>💕 Tạo Lời Chúc</h1>
+        <p>Tạo những lời chúc ngọt ngào với hiệu ứng đáng yêu nhất</p>
+      </div>
+
+      <!-- Main form -->
+      <div class="form-card">
+        <div class="form-group">
+          <label for="message" data-icon="✍️">Nhập lời chúc của bạn</label>
+          <div class="form-help">
+            <strong>Mẹo nhỏ:</strong> Sử dụng dấu <code>|</code> để tách từng từ
+            tạo hiệu ứng đáng yêu hơn
+          </div>
+          <textarea
+            id="message"
+            placeholder="VD: Chúc mừng|sinh nhật|bạn yêu|💕"
+          >
+Chúc mừng|sinh nhật|bạn yêu|💕</textarea
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="heartText" data-icon="💖">Tin nhắn trong trái tim</label>
+          <div class="form-help">
+            <strong>✨ Mẹo hay:</strong> Dòng chữ này sẽ hiện ra giữa trái tim
+            với font chữ đẹp! <br /><strong>💡 Nhiều lời chúc:</strong> Dùng dấu
+            | để tách nhiều lời chúc, chúng sẽ thay đổi liên tục! <br /><em
+              >VD: I Love You|Yêu em nhiều|Forever together|Mãi mãi bên nhau</em
+            >
+          </div>
+          <input
+            type="text"
+            id="heartText"
+            placeholder="VD: I Love You|Yêu em|Happy Birthday|Chúc mừng sinh nhật..."
+            value="I Love You"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="gif" data-icon="🎭">Chọn hiệu ứng đáng yêu</label>
+          <select id="gif" onchange="toggleCustomImageInput()">
+            <option value="">🚫 Không chọn</option>
+            <option value="heart-effect">💖 Hiệu ứng trái tim có chữ</option>
+            <option value="sparkle-heart-effect">
+              💝 Hiệu ứng tim lấp lánh có chữ
+            </option>
+            <option value="./assets/h1.gif">🎂 Happy Birthday xinh xắn</option>
+            <option value="./assets/h2.gif">🎉 Happy Birthday rực rỡ</option>
+            <option value="./assets/h3.gif">🎊 Happy Birthday lung linh</option>
+            <option value="./assets/i1.gif">💕 I love you ngọt ngào</option>
+            <option value="./assets/i2.gif">💘 I love you lãng mạn</option>
+            <option value="./assets/m1.gif">💔 I miss you da diết</option>
+            <option value="./assets/1.gif">👋 Chào bạn dễ thương</option>
+          </select>
+        </div>
+
+        <div id="customImageGroup" class="form-group">
+          <label for="customImage" data-icon="🔗"
+            >Hoặc dán link ảnh yêu thích</label
+          >
+          <input
+            type="text"
+            id="customImage"
+            placeholder="VD: https://example.com/your-cute-image.jpg"
+          />
+          <div class="form-help">
+            ⚠️ Nếu bạn đã chọn hiệu ứng ở trên, trường này sẽ không được sử dụng
+            nhé
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="music" data-icon="🎵">Chọn nhạc nền lãng mạn</label>
+          <select id="music">
+            <option value="">🔇 Không có nhạc</option>
+            <option value="./assets/1.mp3">🎂 Happy Birthday vui vẻ</option>
+            <option value="./assets/2.mp3">🎶 Đàn cá gỗ nhẹ nhàng</option>
+            <option value="./assets/3.mp3">💒 Lễ đường thiêng liêng</option>
+            <option value="./assets/4.mp3">
+              💕 Từng Ngày Yêu Em ngọt ngào
+            </option>
+          </select>
+        </div>
+
+        <!-- Generate button -->
+        <button
+          class="btn btn-primary"
+          onclick="handleGenerateLink()"
+          id="generateButton"
+        >
+          <span id="buttonText">🚀 Tạo Link Thần Kỳ</span>
+          <span id="buttonSpinner" class="spinner-icon" style="display: none"
+            >🔄</span
+          >
+        </button>
+      </div>
+
+      <!-- Preview sections -->
+      <div id="gifPreview" class="preview-section" style="display: none">
+        <h4>👀 Xem trước ảnh đã chọn</h4>
+        <img
+          id="gifImage"
+          alt="GIF Preview"
+          style="
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+            border: 3px solid rgba(255, 182, 193, 0.3);
+          "
+        />
+      </div>
+
+      <div id="heartPreview" class="preview-section" style="display: none">
+        <h4>💖 Xem trước hiệu ứng trái tim có chữ</h4>
+        <div class="heart-container">
+          <canvas id="pinkboard"></canvas>
+          <div class="heart-text-overlay" id="heartTextOverlay">I Love You</div>
+        </div>
+      </div>
+
+      <!-- Sparkle Heart Preview -->
+      <div
+        id="sparkleHeartPreview"
+        class="preview-section"
+        style="display: none"
+      >
+        <h4>💝 Xem trước hiệu ứng tim lấp lánh có chữ</h4>
+        <div class="sparkle-heart-container" id="sparkleHeartContainer">
+          <canvas id="sparkleHeartCanvas"></canvas>
+          <div class="sparkle-heart-main" id="sparkleHeartMain"></div>
+          <div class="sparkle-text" id="sparkleHeartText">I Love You</div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div
+        id="progressContainer"
+        class="progress-container"
+        style="display: none"
+      >
+        <div class="progress-bar-wrapper">
+          <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+        </div>
+        <div id="progressText" class="progress-text">
+          Đang tạo điều kỳ diệu...
+        </div>
+      </div>
+
+      <!-- Link Output Section -->
+      <div id="linkOutput" class="result-card" style="display: none">
+        <h3>🎉 Link thần kỳ đã sẵn sàng!</h3>
+        <div id="linkContent"></div>
+
+        <div class="button-group">
+          <button
+            class="btn btn-primary"
+            onclick="copyLinkToClipboard()"
+            id="copyLinkButton"
+            style="display: inline-flex; align-items: center; gap: 8px"
+          >
+            📋 Copy Link
+          </button>
+
+          <button
+            class="btn btn-success"
+            onclick="openResult()"
+            id="openResultButton"
+          >
+            🌐 Mở kết quả ngay thôi
+          </button>
+        </div>
+      </div>
+
+      <!-- QR Code Section -->
+      <div id="qrBox" class="qr-section" style="display: none">
+        <h4>📱 Mã QR Code đáng yêu</h4>
+        <div
+          id="qrcode"
+          style="
+            display: inline-block;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
+          "
+        ></div>
+        <button
+          id="downloadQRButton"
+          onclick="downloadQRWithBackground()"
+          class="btn btn-info"
+          style="display: none; margin-top: 20px"
+        >
+          📥 Tải mã QR xinh xắn
+        </button>
+      </div>
+
+      <!-- Dummy donateBox to prevent JS errors -->
+      <div id="donateBox" style="display: none"></div>
+    </div>
+
+    <script>
+      // Create floating hearts
+      function createFloatingHearts() {
+        const heartsContainer = document.getElementById("floatingHearts");
+        const hearts = [
+          "💕",
+          "💖",
+          "💗",
+          "💓",
+          "💝",
+          "💘",
+          "💞",
+          "💟",
+          "❤️",
+          "🧡",
+          "💛",
+          "💚",
+          "💙",
+          "💜",
+          "🤍",
+          "🖤",
+          "🤎",
+        ];
+
+        setInterval(() => {
+          const heart = document.createElement("div");
+          heart.className = "floating-heart";
+          heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+          heart.style.left = Math.random() * 100 + "%";
+          heart.style.animationDuration = Math.random() * 3 + 5 + "s";
+          heart.style.fontSize = Math.random() * 10 + 15 + "px";
+
+          heartsContainer.appendChild(heart);
+
+          setTimeout(() => {
+            heart.remove();
+          }, 8000);
+        }, 3000);
+      }
+
+      // Enhanced toggleCustomImageInput with cute animations
+      function toggleCustomImageInput() {
+        const gifSelect = document.getElementById("gif");
+        const customImageGroup = document.getElementById("customImageGroup");
+        const customImageInput = document.getElementById("customImage");
+        const gifPreview = document.getElementById("gifPreview");
+        const heartPreview = document.getElementById("heartPreview");
+
+        console.log("🎭 Dropdown changed to:", gifSelect.value);
+
+        // Hide all previews first with cute animations
+        gifPreview.style.display = "none";
+        heartPreview.style.display = "none";
+        const sparkleHeartPreview = document.getElementById(
+          "sparkleHeartPreview"
+        );
+        if (sparkleHeartPreview) {
+          sparkleHeartPreview.style.display = "none";
+          sparkleHeartPreview.classList.remove("active");
+        }
+        gifPreview.classList.remove("active");
+        heartPreview.classList.remove("active");
+
+        if (gifSelect.value === "heart-effect") {
+          console.log("💖 Heart effect selected");
+          customImageGroup.style.display = "none";
+          // Clear custom image when selecting dropdown
+          customImageInput.value = "";
+          showHeartEffect();
+        } else if (gifSelect.value === "sparkle-heart-effect") {
+          console.log("💝 Sparkle heart effect selected");
+          customImageGroup.style.display = "none";
+          // Clear custom image when selecting dropdown
+          customImageInput.value = "";
+          hideHeartEffect();
+          showSparkleHeartEffect();
+        } else if (gifSelect.value === "") {
+          console.log(
+            "❌ No dropdown effect selected, showing custom image input"
+          );
+          customImageGroup.style.display = "block";
+          hideHeartEffect();
+          hideSparkleHeartEffect();
+        } else {
+          console.log("🖼️ GIF effect selected:", gifSelect.value);
+          customImageGroup.style.display = "none";
+          // Clear custom image when selecting dropdown
+          customImageInput.value = "";
+          hideHeartEffect();
+          hideSparkleHeartEffect();
+          // Show GIF preview with cute animation
+          gifPreview.style.display = "block";
+          gifPreview.classList.add("active");
+          const gifImage = document.getElementById("gifImage");
+          gifImage.src = gifSelect.value;
+
+          // Add smooth cute animation
+          gifImage.style.opacity = "0";
+          gifImage.style.transform = "scale(0.8) rotate(-5deg)";
+          setTimeout(() => {
+            gifImage.style.transition =
+              "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+            gifImage.style.opacity = "1";
+            gifImage.style.transform = "scale(1) rotate(0deg)";
+          }, 100);
+        }
+      }
+
+      function downloadQRWithBackground() {
+        const qrCanvas = document.querySelector("#qrcode canvas");
+        if (qrCanvas) {
+          const link = document.createElement("a");
+          link.download = "cute-qrcode.png";
+          link.href = qrCanvas.toDataURL();
+          link.click();
+        }
+      }
+
+      // Enhanced generateLink function with cuter UI feedback
+      function generateLink() {
+        console.log("generateLink called");
+
+        const msg = document.getElementById("message").value;
+        const gif = document.getElementById("gif").value;
+        const music = document.getElementById("music").value;
+        const customImage = document.getElementById("customImage").value;
+        const heartText = document.getElementById("heartText").value;
+
+        if (!msg.trim()) {
+          alert("💕 Vui lòng nhập lời chúc ngọt ngào của bạn!");
+          return;
+        }
+
+        // Logic ưu tiên: dropdown gif trước, nếu không có thì dùng customImage
+        let selectedEffect = "";
+        if (gif && gif.trim() !== "") {
+          selectedEffect = gif;
+          console.log("🎭 Using dropdown effect:", gif);
+        } else if (customImage && customImage.trim() !== "") {
+          selectedEffect = customImage;
+          console.log("🖼️ Using custom image:", customImage);
+        } else {
+          console.log("❌ No effect selected");
+        }
+
+        const data = {
+          msg: msg,
+          gif: selectedEffect,
+          music: music,
+          heartText: heartText || "I Love You",
+        };
+
+        console.log("📦 Data object created:", data);
+
+        // Nén và mã hóa dữ liệu bằng LZString
+        const compressed = LZString.compressToBase64(JSON.stringify(data));
+        const url = `${
+          window.location.origin
+        }${window.location.pathname.replace(
+          "input.html",
+          "index.html"
+        )}?data=${encodeURIComponent(compressed)}`;
+
+        console.log("Generated compressed data:", compressed);
+        console.log("Generated URL:", url);
+
+        // Store the generated link globally
+        currentGeneratedLink = url;
+
+        // Enhanced link output with cuter styling
+        const linkOutput = document.getElementById("linkOutput");
+        const linkContent = document.getElementById("linkContent");
+
+        linkContent.innerHTML = `
+        <div style="margin-bottom: 20px; padding: 15px; background: rgba(255,240,245,0.5); border-radius: 10px;">
+          <strong style="color: #ff69b4; font-size: 1rem;">📋 Thông tin debug:</strong><br>
+          <small style="color: #666;">
+            🎭 Hiệu ứng: <span style="color: #e91e63;">${
+              data.gif || "Không có"
+            }</span><br>
+            🎵 Nhạc: <span style="color: #e91e63;">${
+              data.music || "Không có"
+            }</span><br>
+            💖 Tin nhắn tim: <span style="color: #e91e63;">${
+              data.heartText
+            }</span>
+          </small>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <strong style="color: #ff69b4; font-size: 1.1rem;">🌐 Link kết quả đáng yêu:</strong>
+          <div class="link-display">
+            <a href="${url}" target="_blank" 
+               style="color: #e91e63; text-decoration: none; word-break: break-all; font-weight: 500;">
+              ${url}
+            </a>
+          </div>
+        </div>
+      `;
+
+        linkOutput.style.display = "block";
+        linkOutput.style.opacity = "0";
+        linkOutput.style.transform = "translateY(30px) scale(0.9)";
+        setTimeout(() => {
+          linkOutput.style.transition =
+            "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+          linkOutput.style.opacity = "1";
+          linkOutput.style.transform = "translateY(0) scale(1)";
+        }, 100);
+
+        // Show QR Box with cute animation
+        const qrBox = document.getElementById("qrBox");
+        qrBox.style.display = "block";
+        qrBox.style.opacity = "0";
+        qrBox.style.transform = "translateY(30px) scale(0.9)";
+
+        document.getElementById("qrcode").innerHTML = "";
+
+        // Enhanced QRCode generation with better fallback
+        function generateQRCode() {
+          console.log("🔍 Checking QRCode availability:", typeof QRCode);
+          let attempts = 0;
+          const maxAttempts = 10;
+          function tryGenerate() {
+            attempts++;
+            if (typeof QRCode !== "undefined") {
+              try {
+                console.log("✅ QRCode library found, generating...");
+                new QRCode(document.getElementById("qrcode"), {
+                  text: url,
+                  width: 200,
+                  height: 200,
+                  colorDark: "#ff69b4",
+                  colorLight: "#ffffff",
+                  correctLevel: QRCode.CorrectLevel.H,
+                });
+                console.log("🎉 QR Code generated successfully!");
+              } catch (error) {
+                console.error("QRCode generation error:", error);
+                showAdvancedQRFallback();
+              }
+            } else if (attempts < maxAttempts) {
+              console.log(
+                `⏳ QRCode not ready, attempt ${attempts}/${maxAttempts}, waiting...`
+              );
+              setTimeout(tryGenerate, 200);
+            } else {
+              console.warn(
+                "❌ QRCode library failed to load after all attempts"
+              );
+              showAdvancedQRFallback();
+            }
+          }
+          tryGenerate();
+        }
+
+        function loadQRCodeLibraryDynamic() {
+          console.log("🔄 Loading QRCode library dynamically...");
+          const script = document.createElement("script");
+          script.src =
+            "https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js";
+          script.onload = function () {
+            console.log("✅ Dynamic QRCode library loaded successfully");
+            generateQRCode();
+          };
+          script.onerror = function () {
+            console.warn("❌ Failed to load dynamic QRCode library");
+            showAdvancedQRFallback();
+          };
+          document.head.appendChild(script);
+        }
+
+        function showAdvancedQRFallback() {
+          document.getElementById("qrcode").innerHTML = `
+            <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #ffb6c1, #ffc0cb); border-radius: 15px;">
+              <div style="font-size: 3rem; margin-bottom: 15px;">📱</div>
+              <h4 style="color: #ff1493; margin-bottom: 15px; font-family: 'Pacifico', cursive;">QR Code đang được chuẩn bị...</h4>
+              <p style="color: #666; font-size: 0.95rem; margin-bottom: 20px;">Hiện tại bạn có thể:</p>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button onclick="generateQRViaAPI('${url}')" class="btn btn-primary" style="font-size: 0.9rem;">
+                  🔄 Tạo QR qua API
+                </button>
+                <button onclick="openQRGenerator('${url}')" class="btn btn-info" style="font-size: 0.9rem;">
+                  🌐 Tạo QR online
+                </button>
+                <p style="color: #999; font-size: 0.8rem; margin-top: 10px;">
+                  Hoặc copy link phía trên để chia sẻ! 💕
+                </p>
+              </div>
+            </div>
+          `;
+        }
+
+        // Start QR generation
+        generateQRCode();
+
+        setTimeout(() => {
+          qrBox.style.transition =
+            "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+          qrBox.style.opacity = "1";
+          qrBox.style.transform = "translateY(0) scale(1)";
+          document.getElementById("downloadQRButton").style.display =
+            "inline-flex";
+        }, 400);
+
+        console.log("✅ All cute UI updated successfully");
+      }
+
+      window.generateLink = generateLink;
+
+      // QR Code fallback functions
+      function generateQRViaAPI(url) {
+        const qrContainer = document.getElementById("qrcode");
+        qrContainer.innerHTML = `
+          <div style="text-align: center; padding: 20px;">
+            <div style="font-size: 2rem; margin-bottom: 10px;">🔄</div>
+            <p style="color: #ff69b4;">Đang tạo QR Code...</p>
+          </div>
+        `;
+
+        // Using QR Server API
+        const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
+          url
+        )}&color=ff69b4&bgcolor=ffffff`;
+
+        const img = new Image();
+        img.onload = function () {
+          qrContainer.innerHTML = `
+            <div style="text-align: center; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);">
+              <img src="${qrApiUrl}" alt="QR Code" style="width: 200px; height: 200px; border-radius: 10px;">
+              <p style="color: #ff69b4; margin-top: 10px; font-size: 0.9rem;">✅ QR Code đã sẵn sàng!</p>
+            </div>
+          `;
+          document.getElementById("downloadQRButton").style.display =
+            "inline-flex";
+        };
+        img.onerror = function () {
+          qrContainer.innerHTML = `
+            <div style="text-align: center; padding: 20px;">
+              <div style="font-size: 2rem; margin-bottom: 10px;">❌</div>
+              <p style="color: #ff1493;">Không thể tạo QR Code</p>
+              <p style="color: #666; font-size: 0.8rem;">Vui lòng copy link để chia sẻ! 💕</p>
+            </div>
+          `;
+        };
+        img.src = qrApiUrl;
+      }
+
+      function openQRGenerator(url) {
+        const qrGeneratorUrl = `https://www.qr-code-generator.com/a1/?url=${encodeURIComponent(
+          url
+        )}`;
+        window.open(qrGeneratorUrl, "_blank");
+      }
+
+      // Global variable to store current generated link
+      let currentGeneratedLink = "";
+
+      // Enhanced copy to clipboard with cuter feedback
+      function copyToClipboard(text) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            // Show cute success feedback
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = "✅ Đã sao chép!";
+            button.style.background =
+              "linear-gradient(135deg, #4CAF50, #45a049)";
+
+            setTimeout(() => {
+              button.innerHTML = originalText;
+              button.style.background =
+                "linear-gradient(135deg, #ff9ec7 0%, #ff69b4 50%, #e91e63 100%)";
+            }, 2000);
+          })
+          .catch(() => {
+            alert("💕 Không thể sao chép tự động. Vui lòng copy thủ công nhé!");
+          });
+      }
+
+      // Copy current generated link to clipboard
+      function copyLinkToClipboard() {
+        if (!currentGeneratedLink) {
+          alert("💕 Chưa có link nào được tạo. Vui lòng tạo link trước nhé!");
+          return;
+        }
+
+        navigator.clipboard
+          .writeText(currentGeneratedLink)
+          .then(() => {
+            // Show cute success feedback
+            const button = document.getElementById("copyLinkButton");
+            const originalText = button.innerHTML;
+            button.innerHTML = "✅ Đã copy!";
+            button.style.background =
+              "linear-gradient(135deg, #4CAF50, #45a049)";
+
+            // Add bounce animation
+            button.style.transform = "scale(1.1)";
+            setTimeout(() => {
+              button.style.transform = "scale(1)";
+            }, 150);
+
+            setTimeout(() => {
+              button.innerHTML = originalText;
+              button.style.background =
+                "linear-gradient(135deg, #ff9ec7 0%, #ff69b4 50%, #e91e63 100%)";
+            }, 2500);
+
+            // Show cute notification
+            showCuteNotification(
+              "🎉 Link đã được sao chép! Chia sẻ ngay nào! 💕"
+            );
+          })
+          .catch((err) => {
+            console.error("Copy failed:", err);
+            // Fallback for older browsers
+            const textArea = document.createElement("textarea");
+            textArea.value = currentGeneratedLink;
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+              document.execCommand("copy");
+              showCuteNotification("✅ Link đã được copy thủ công! 💕");
+            } catch (err) {
+              alert(
+                "💕 Không thể sao chép tự động. Link của bạn là:\n" +
+                  currentGeneratedLink
+              );
+            }
+
+            document.body.removeChild(textArea);
+          });
+      }
+
+      // Show cute notification
+      function showCuteNotification(message) {
+        // Remove existing notification if any
+        const existingNotification =
+          document.getElementById("cuteNotification");
+        if (existingNotification) {
+          existingNotification.remove();
+        }
+
+        // Create new notification
+        const notification = document.createElement("div");
+        notification.id = "cuteNotification";
+        notification.innerHTML = message;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: linear-gradient(135deg, #ff9ec7, #ff69b4);
+          color: white;
+          padding: 15px 25px;
+          border-radius: 25px;
+          box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+          font-size: 16px;
+          font-weight: 600;
+          z-index: 10000;
+          transform: translateX(100%);
+          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          max-width: 300px;
+          text-align: center;
+        `;
+
+        document.body.appendChild(notification);
+
+        // Animate in
+        setTimeout(() => {
+          notification.style.transform = "translateX(0)";
+        }, 100);
+
+        // Animate out and remove
+        setTimeout(() => {
+          notification.style.transform = "translateX(100%)";
+          setTimeout(() => {
+            notification.remove();
+          }, 500);
+        }, 3000);
+      }
+
+      // Open link directly in new tab
+      function openDirectLink(url) {
+        const button = event.target;
+        const originalText = button.innerHTML;
+        button.innerHTML = "🚀 Đang mở...";
+
+        window.open(url, "_blank");
+
+        setTimeout(() => {
+          button.innerHTML = "✅ Đã mở!";
+          setTimeout(() => {
+            button.innerHTML = originalText;
+          }, 1500);
+        }, 500);
+      }
+
+      // Initialize on DOM loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        // Create floating hearts
+        createFloatingHearts();
+
+        // Cute loading animation
+        const loadingText = document
+          .getElementById("loading-screen")
+          .querySelector(".loading-text");
+        const loadingMessages = [
+          "Đang chuẩn bị điều kỳ diệu...",
+          "Đang tạo không khí lãng mạn...",
+          "Đang pha chế tình yêu...",
+          "Sắp xong rồi...",
+        ];
+        let messageIndex = 0;
+
+        const loadingInterval = setInterval(() => {
+          messageIndex = (messageIndex + 1) % loadingMessages.length;
+          loadingText.textContent = loadingMessages[messageIndex];
+        }, 1500);
+
+        // Show main content after loading with cute animation
+        window.addEventListener("load", () => {
+          setTimeout(() => {
+            clearInterval(loadingInterval);
+            const loadingScreen = document.getElementById("loading-screen");
+            const mainContent = document.querySelector(".container");
+
+            loadingScreen.style.transition =
+              "all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+            loadingScreen.style.opacity = "0";
+            loadingScreen.style.transform = "scale(0.8)";
+
+            setTimeout(() => {
+              loadingScreen.style.display = "none";
+              mainContent.style.display = "block";
+              mainContent.style.opacity = "0";
+              mainContent.style.transform = "translateY(50px) scale(0.9)";
+
+              setTimeout(() => {
+                mainContent.style.transition =
+                  "all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+                mainContent.style.opacity = "1";
+                mainContent.style.transform = "translateY(0) scale(1)";
+              }, 100);
+            }, 800);
+          }, 2000);
+        });
+
+        // Add cute footer
+        const footer = document.createElement("footer");
+        footer.innerHTML =
+          "<p>© 2025 Sonn 🌷 Được tạo ra với tình yêu vô tận</p>";
+        document.body.appendChild(footer);
+
+        // Prevent right-click (optional)
+        window.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+        });
+      });
+    </script>
+    <script>
+      // Heart Effect Functions with enhanced cuteness
+      let heartTextInterval;
+      let heartAnimation;
+
+      // Heart particles settings
+      var settings = {
+        particles: {
+          length: 2000,
+          duration: 2,
+          velocity: 100,
+          effect: -1.3,
+          size: 13,
+        },
+      };
+
+      // RequestAnimationFrame polyfill
+      (function () {
+        var b = 0;
+        var c = ["ms", "moz", "webkit", "o"];
+        for (var a = 0; a < c.length && !window.requestAnimationFrame; ++a) {
+          window.requestAnimationFrame = window[c[a] + "RequestAnimationFrame"];
+          window.cancelAnimationFrame =
+            window[c[a] + "CancelAnimationFrame"] ||
+            window[c[a] + "CancelRequestAnimationFrame"];
+        }
+        if (!window.requestAnimationFrame) {
+          window.requestAnimationFrame = function (h, e) {
+            var d = new Date().getTime();
+            var f = Math.max(0, 16 - (d - b));
+            var g = window.setTimeout(function () {
+              h(d + f);
+            }, f);
+            b = d + f;
+            return g;
+          };
+        }
+        if (!window.cancelAnimationFrame) {
+          window.cancelAnimationFrame = function (d) {
+            clearTimeout(d);
+          };
+        }
+      })();
+
+      // Point class
+      var Point = (function () {
+        function Point(x, y) {
+          this.x = typeof x !== "undefined" ? x : 0;
+          this.y = typeof y !== "undefined" ? y : 0;
+        }
+        Point.prototype.clone = function () {
+          return new Point(this.x, this.y);
+        };
+        Point.prototype.length = function (length) {
+          if (typeof length == "undefined")
+            return Math.sqrt(this.x * this.x + this.y * this.y);
+          this.normalize();
+          this.x *= length;
+          this.y *= length;
+          return this;
+        };
+        Point.prototype.normalize = function () {
+          var length = this.length();
+          this.x /= length;
+          this.y /= length;
+          return this;
+        };
+        return Point;
+      })();
+
+      // Particle class
+      var Particle = (function () {
+        function Particle() {
+          this.position = new Point();
+          this.velocity = new Point();
+          this.acceleration = new Point();
+          this.age = 0;
+        }
+        Particle.prototype.initialize = function (x, y, dx, dy) {
+          this.position.x = x;
+          this.position.y = y;
+          this.velocity.x = dx;
+          this.velocity.y = dy;
+          this.acceleration.x = dx * settings.particles.effect;
+          this.acceleration.y = dy * settings.particles.effect;
+          this.age = 0;
+        };
+        Particle.prototype.update = function (deltaTime) {
+          this.position.x += this.velocity.x * deltaTime;
+          this.position.y += this.velocity.y * deltaTime;
+          this.velocity.x += this.acceleration.x * deltaTime;
+          this.velocity.y += this.acceleration.y * deltaTime;
+          this.age += deltaTime;
+        };
+        Particle.prototype.draw = function (context, image) {
+          function ease(t) {
+            return --t * t * t + 1;
+          }
+          var size = image.width * ease(this.age / settings.particles.duration);
+          context.globalAlpha = 1 - this.age / settings.particles.duration;
+          context.drawImage(
+            image,
+            this.position.x - size / 2,
+            this.position.y - size / 2,
+            size,
+            size
+          );
+        };
+        return Particle;
+      })();
+
+      // ParticlePool class
+      var ParticlePool = (function () {
+        var particles,
+          firstActive = 0,
+          firstFree = 0,
+          duration = settings.particles.duration;
+        function ParticlePool(length) {
+          particles = new Array(length);
+          for (var i = 0; i < particles.length; i++)
+            particles[i] = new Particle();
+        }
+        ParticlePool.prototype.add = function (x, y, dx, dy) {
+          particles[firstFree].initialize(x, y, dx, dy);
+          firstFree++;
+          if (firstFree == particles.length) firstFree = 0;
+          if (firstActive == firstFree) firstActive++;
+          if (firstActive == particles.length) firstActive = 0;
+        };
+        ParticlePool.prototype.update = function (deltaTime) {
+          var i;
+          if (firstActive < firstFree) {
+            for (i = firstActive; i < firstFree; i++)
+              particles[i].update(deltaTime);
+          }
+          if (firstFree < firstActive) {
+            for (i = firstActive; i < particles.length; i++)
+              particles[i].update(deltaTime);
+            for (i = 0; i < firstFree; i++) particles[i].update(deltaTime);
+          }
+          while (
+            particles[firstActive].age >= duration &&
+            firstActive != firstFree
+          ) {
+            firstActive++;
+            if (firstActive == particles.length) firstActive = 0;
+          }
+        };
+        ParticlePool.prototype.draw = function (context, image) {
+          if (firstActive < firstFree) {
+            for (i = firstActive; i < firstFree; i++)
+              particles[i].draw(context, image);
+          }
+          if (firstFree < firstActive) {
+            for (i = firstActive; i < particles.length; i++)
+              particles[i].draw(context, image);
+            for (i = 0; i < firstFree; i++) particles[i].draw(context, image);
+          }
+        };
+        return ParticlePool;
+      })();
+
+      function showHeartEffect() {
+        const heartPreview = document.getElementById("heartPreview");
+        const heartTextOverlay = document.getElementById("heartTextOverlay");
+        const heartTextInput = document.getElementById("heartText");
+
+        heartPreview.style.display = "block";
+        heartPreview.classList.add("active");
+
+        // Add cute animation
+        heartPreview.style.opacity = "0";
+        heartPreview.style.transform = "translateY(30px) scale(0.8)";
+        setTimeout(() => {
+          heartPreview.style.transition =
+            "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+          heartPreview.style.opacity = "1";
+          heartPreview.style.transform = "translateY(0) scale(1)";
+        }, 100);
+
+        // Update heart text overlay with current input
+        heartTextOverlay.textContent = heartTextInput.value || "I Love You";
+
+        // Listen for changes in heart text input
+        heartTextInput.addEventListener("input", function () {
+          heartTextOverlay.textContent = this.value || "I Love You";
+        });
+
+        // Start heart particles animation
+        startHeartParticles();
+      }
+
+      function startHeartParticles() {
+        const canvas = document.getElementById("pinkboard");
+        if (!canvas) return;
+
+        const context = canvas.getContext("2d");
+        const particles = new ParticlePool(settings.particles.length);
+        const particleRate =
+          settings.particles.length / settings.particles.duration;
+        let time;
+
+        // Get point on heart with -PI <= t <= PI
+        function pointOnHeart(t) {
+          return new Point(
+            160 * Math.pow(Math.sin(t), 3),
+            130 * Math.cos(t) -
+              50 * Math.cos(2 * t) -
+              20 * Math.cos(3 * t) -
+              10 * Math.cos(4 * t) +
+              25
+          );
+        }
+
+        // Creating the particle image using a dummy canvas
+        const image = (function () {
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d");
+          canvas.width = settings.particles.size;
+          canvas.height = settings.particles.size;
+
+          // Helper function to create the path
+          function to(t) {
+            const point = pointOnHeart(t);
+            point.x =
+              settings.particles.size / 2 +
+              (point.x * settings.particles.size) / 350;
+            point.y =
+              settings.particles.size / 2 -
+              (point.y * settings.particles.size) / 350;
+            return point;
+          }
+
+          // Create the path
+          context.beginPath();
+          let t = -Math.PI;
+          let point = to(t);
+          context.moveTo(point.x, point.y);
+          while (t < Math.PI) {
+            t += 0.01;
+            point = to(t);
+            context.lineTo(point.x, point.y);
+          }
+          context.closePath();
+
+          // Create the cute pink fill
+          context.fillStyle = "#FF69B4";
+          context.fill();
+
+          // Create the image
+          const image = new Image();
+          image.src = canvas.toDataURL();
+          return image;
+        })();
+
+        // Render function
+        function render() {
+          if (document.getElementById("heartPreview").style.display === "none")
+            return;
+
+          heartAnimation = requestAnimationFrame(render);
+
+          // Update time
+          const newTime = new Date().getTime() / 1000;
+          const deltaTime = newTime - (time || newTime);
+          time = newTime;
+
+          // Clear canvas
+          context.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Create new particles
+          const amount = particleRate * deltaTime;
+          for (let i = 0; i < amount; i++) {
+            const pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+            const dir = pos.clone().length(settings.particles.velocity);
+            particles.add(
+              canvas.width / 2 + pos.x,
+              canvas.height / 2 - pos.y,
+              dir.x,
+              -dir.y
+            );
+          }
+
+          // Update and draw particles
+          particles.update(deltaTime);
+          particles.draw(context, image);
+        }
+
+        // Handle canvas resizing
+        function onResize() {
+          canvas.width = canvas.clientWidth;
+          canvas.height = canvas.clientHeight;
+        }
+
+        window.addEventListener("resize", onResize);
+
+        // Start rendering
+        setTimeout(() => {
+          onResize();
+          render();
+        }, 10);
+      }
+
+      function hideHeartEffect() {
+        const heartPreview = document.getElementById("heartPreview");
+        heartPreview.classList.remove("active");
+
+        // Smooth cute hide animation
+        heartPreview.style.transition =
+          "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+        heartPreview.style.opacity = "0";
+        heartPreview.style.transform = "translateY(-30px) scale(0.8)";
+
+        setTimeout(() => {
+          heartPreview.style.display = "none";
+        }, 400);
+
+        if (heartTextInterval) {
+          clearInterval(heartTextInterval);
+        }
+        if (heartAnimation) {
+          cancelAnimationFrame(heartAnimation);
+        }
+      }
+
+      // Sparkle Heart Effect Functions
+      function showSparkleHeartEffect() {
+        const sparkleHeartPreview = document.getElementById(
+          "sparkleHeartPreview"
+        );
+        const sparkleHeartText = document.getElementById("sparkleHeartText");
+        const heartText =
+          document.getElementById("heartText").value || "I Love You";
+
+        // Update text content
+        sparkleHeartText.textContent = heartText;
+
+        // Show preview with cute animation
+        sparkleHeartPreview.style.display = "block";
+        sparkleHeartPreview.style.opacity = "0";
+        sparkleHeartPreview.style.transform = "translateY(30px) scale(0.8)";
+
+        setTimeout(() => {
+          sparkleHeartPreview.style.transition =
+            "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+          sparkleHeartPreview.style.opacity = "1";
+          sparkleHeartPreview.style.transform = "translateY(0) scale(1)";
+          sparkleHeartPreview.classList.add("active");
+
+          // Start sparkle animation
+          initSparkleHeartAnimation();
+        }, 10);
+      }
+
+      function hideSparkleHeartEffect() {
+        const sparkleHeartPreview = document.getElementById(
+          "sparkleHeartPreview"
+        );
+        sparkleHeartPreview.classList.remove("active");
+
+        // Smooth hide animation
+        sparkleHeartPreview.style.transition =
+          "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+        sparkleHeartPreview.style.opacity = "0";
+        sparkleHeartPreview.style.transform = "translateY(-30px) scale(0.8)";
+
+        setTimeout(() => {
+          sparkleHeartPreview.style.display = "none";
+        }, 400);
+
+        // Stop sparkle animation
+        if (window.sparkleAnimation) {
+          cancelAnimationFrame(window.sparkleAnimation);
+        }
+      }
+
+      function initSparkleHeartAnimation() {
+        const sparkleContainer = document.getElementById(
+          "sparkleHeartContainer"
+        );
+        if (!sparkleContainer) return;
+
+        function createSparkle() {
+          const sparkle = document.createElement("div");
+          sparkle.classList.add("sparkle");
+
+          // Random sparkle colors
+          const colors = ["", "pink", "blue", "white"];
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+          if (randomColor) sparkle.classList.add(randomColor);
+
+          // Random position around the heart
+          const heartRect = sparkleContainer.getBoundingClientRect();
+          const centerX = heartRect.width / 2;
+          const centerY = heartRect.height / 2;
+          const angle = Math.random() * Math.PI * 2;
+          const radius = 80 + Math.random() * 40;
+
+          const x = centerX + Math.cos(angle) * radius;
+          const y = centerY + Math.sin(angle) * radius;
+
+          sparkle.style.left = x + "px";
+          sparkle.style.top = y + "px";
+          sparkle.style.animationDelay = Math.random() * 2 + "s";
+          sparkle.style.animationDuration = 2 + Math.random() * 2 + "s";
+
+          sparkleContainer.appendChild(sparkle);
+
+          // Remove sparkle after animation
+          setTimeout(() => {
+            if (sparkle.parentNode) {
+              sparkle.parentNode.removeChild(sparkle);
+            }
+          }, 4000);
+        }
+
+        // Create initial sparkles
+        for (let i = 0; i < 20; i++) {
+          setTimeout(createSparkle, i * 100);
+        }
+
+        // Continue creating sparkles
+        function animateSparkles() {
+          if (Math.random() < 0.3) {
+            createSparkle();
+          }
+          window.sparkleAnimation = requestAnimationFrame(animateSparkles);
+        }
+        animateSparkles();
+      }
+
+      // Initialize heart particles effect similar to tim.html
+      function initHeartParticlesPreview() {
+        const heartCanvas = document.getElementById("pinkboard");
+        if (!heartCanvas) return;
+
+        const ctx = heartCanvas.getContext("2d");
+
+        // Settings for heart particles
+        const settings = {
+          particles: {
+            length: 500, // Reduced for preview
+            duration: 2,
+            velocity: 100,
+            effect: -1.3,
+            size: 8, // Smaller for preview
+          },
+        };
+
+        // Point class
+        function Point(x, y) {
+          this.x = typeof x !== "undefined" ? x : 0;
+          this.y = typeof y !== "undefined" ? y : 0;
+        }
+
+        Point.prototype.clone = function () {
+          return new Point(this.x, this.y);
+        };
+
+        Point.prototype.length = function (length) {
+          if (typeof length == "undefined")
+            return Math.sqrt(this.x * this.x + this.y * this.y);
+          this.normalize();
+          this.x *= length;
+          this.y *= length;
+          return this;
+        };
+
+        Point.prototype.normalize = function () {
+          var length = this.length();
+          this.x /= length;
+          this.y /= length;
+          return this;
+        };
+
+        // Particle class
+        function Particle() {
+          this.position = new Point();
+          this.velocity = new Point();
+          this.acceleration = new Point();
+          this.age = 0;
+        }
+
+        Particle.prototype.initialize = function (x, y, dx, dy) {
+          this.position.x = x;
+          this.position.y = y;
+          this.velocity.x = dx;
+          this.velocity.y = dy;
+          this.acceleration.x = dx * settings.particles.effect;
+          this.acceleration.y = dy * settings.particles.effect;
+          this.age = 0;
+        };
+
+        Particle.prototype.update = function (deltaTime) {
+          this.position.x += this.velocity.x * deltaTime;
+          this.position.y += this.velocity.y * deltaTime;
+          this.velocity.x += this.acceleration.x * deltaTime;
+          this.velocity.y += this.acceleration.y * deltaTime;
+          this.age += deltaTime;
+        };
+
+        Particle.prototype.draw = function (context, image) {
+          function ease(t) {
+            return --t * t * t + 1;
+          }
+          var size = image.width * ease(this.age / settings.particles.duration);
+          context.globalAlpha = 1 - this.age / settings.particles.duration;
+          context.drawImage(
+            image,
+            this.position.x - size / 2,
+            this.position.y - size / 2,
+            size,
+            size
+          );
+        };
+
+        // ParticlePool class
+        function ParticlePool(length) {
+          var particles = new Array(length);
+          var firstActive = 0;
+          var firstFree = 0;
+          var duration = settings.particles.duration;
+
+          for (var i = 0; i < particles.length; i++)
+            particles[i] = new Particle();
+
+          this.add = function (x, y, dx, dy) {
+            particles[firstFree].initialize(x, y, dx, dy);
+            firstFree++;
+            if (firstFree == particles.length) firstFree = 0;
+            if (firstActive == firstFree) firstActive++;
+            if (firstActive == particles.length) firstActive = 0;
+          };
+
+          this.update = function (deltaTime) {
+            var i;
+            if (firstActive < firstFree) {
+              for (i = firstActive; i < firstFree; i++)
+                particles[i].update(deltaTime);
+            }
+            if (firstFree < firstActive) {
+              for (i = firstActive; i < particles.length; i++)
+                particles[i].update(deltaTime);
+              for (i = 0; i < firstFree; i++) particles[i].update(deltaTime);
+            }
+            while (
+              particles[firstActive].age >= duration &&
+              firstActive != firstFree
+            ) {
+              firstActive++;
+              if (firstActive == particles.length) firstActive = 0;
+            }
+          };
+
+          this.draw = function (context, image) {
+            if (firstActive < firstFree) {
+              for (i = firstActive; i < firstFree; i++)
+                particles[i].draw(context, image);
+            }
+            if (firstFree < firstActive) {
+              for (i = firstActive; i < particles.length; i++)
+                particles[i].draw(context, image);
+              for (i = 0; i < firstFree; i++) particles[i].draw(context, image);
+            }
+          };
+        }
+
+        var context = heartCanvas.getContext("2d");
+        var particles = new ParticlePool(settings.particles.length);
+        var particleRate =
+          settings.particles.length / settings.particles.duration;
+        var time;
+
+        // Get point on heart with -PI <= t <= PI
+        function pointOnHeart(t) {
+          return new Point(
+            160 * Math.pow(Math.sin(t), 3),
+            130 * Math.cos(t) -
+              50 * Math.cos(2 * t) -
+              20 * Math.cos(3 * t) -
+              10 * Math.cos(4 * t) +
+              25
+          );
+        }
+
+        // Creating the particle image
+        var image = (function () {
+          var canvas = document.createElement("canvas");
+          var context = canvas.getContext("2d");
+          canvas.width = settings.particles.size;
+          canvas.height = settings.particles.size;
+
+          function to(t) {
+            var point = pointOnHeart(t);
+            point.x =
+              settings.particles.size / 2 +
+              (point.x * settings.particles.size) / 350;
+            point.y =
+              settings.particles.size / 2 -
+              (point.y * settings.particles.size) / 350;
+            return point;
+          }
+
+          context.beginPath();
+          var t = -Math.PI;
+          var point = to(t);
+          context.moveTo(point.x, point.y);
+          while (t < Math.PI) {
+            t += 0.01;
+            point = to(t);
+            context.lineTo(point.x, point.y);
+          }
+          context.closePath();
+          context.fillStyle = "#FF5CA4";
+          context.fill();
+
+          var image = new Image();
+          image.src = canvas.toDataURL();
+          return image;
+        })();
+
+        // Render function
+        function render() {
+          if (heartPreview.style.display === "none") return; // Stop if preview is hidden
+
+          requestAnimationFrame(render);
+
+          var newTime = new Date().getTime() / 1000;
+          var deltaTime = newTime - (time || newTime);
+          time = newTime;
+
+          context.clearRect(0, 0, heartCanvas.width, heartCanvas.height);
+
+          var amount = particleRate * deltaTime;
+          for (var i = 0; i < amount; i++) {
+            var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+            var dir = pos.clone().length(settings.particles.velocity);
+            particles.add(
+              heartCanvas.width / 2 + pos.x,
+              heartCanvas.height / 2 - pos.y,
+              dir.x,
+              -dir.y
+            );
+          }
+
+          particles.update(deltaTime);
+          particles.draw(context, image);
+        }
+
+        // Handle canvas resizing
+        function onResize() {
+          heartCanvas.width = heartCanvas.clientWidth;
+          heartCanvas.height = heartCanvas.clientHeight;
+        }
+
+        setTimeout(function () {
+          onResize();
+          render();
+        }, 10);
+      }
+
+      // Enhanced progress bar functions with cute messages
+      function showProgress() {
+        const container = document.getElementById("progressContainer");
+        const bar = document.getElementById("progressBar");
+        const text = document.getElementById("progressText");
+
+        container.style.display = "block";
+        container.style.opacity = "0";
+        container.style.transform = "translateY(30px) scale(0.9)";
+
+        setTimeout(() => {
+          container.style.transition =
+            "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+          container.style.opacity = "1";
+          container.style.transform = "translateY(0) scale(1)";
+        }, 100);
+
+        bar.style.width = "0%";
+        text.textContent = "Đang tạo điều kỳ diệu...";
+
+        const cuteMessages = [
+          "🔄 Đang pha chế tình yêu...",
+          "📱 Đang tạo mã QR xinh xắn...",
+          "🔗 Đang dệt nên link thần kỳ...",
+          "✨ Sắp hoàn thành rồi...",
+          "💕 Chờ chút nữa nhé...",
+        ];
+
+        let progress = 0;
+        let messageIndex = 0;
+
+        const interval = setInterval(() => {
+          if (progress < 20) {
+            progress += Math.random() * 3 + 1;
+            text.textContent = cuteMessages[0];
+          } else if (progress < 40) {
+            progress += Math.random() * 2 + 0.5;
+            text.textContent = cuteMessages[1];
+          } else if (progress < 60) {
+            progress += Math.random() * 2 + 0.5;
+            text.textContent = cuteMessages[2];
+          } else if (progress < 80) {
+            progress += Math.random() * 1.5 + 0.3;
+            text.textContent = cuteMessages[3];
+          } else if (progress < 90) {
+            progress += Math.random() * 0.5 + 0.1;
+            text.textContent = cuteMessages[4];
+          }
+
+          bar.style.width = Math.min(progress, 90) + "%";
+        }, 250);
+
+        return interval;
+      }
+
+      function hideProgress(interval) {
+        clearInterval(interval);
+        const container = document.getElementById("progressContainer");
+        const bar = document.getElementById("progressBar");
+        const text = document.getElementById("progressText");
+
+        bar.style.width = "100%";
+        text.textContent = "🎉 Hoàn thành rồi! Thật tuyệt vời!";
+
+        setTimeout(() => {
+          container.style.transition =
+            "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+          container.style.opacity = "0";
+          container.style.transform = "translateY(-30px) scale(0.9)";
+          setTimeout(() => {
+            container.style.display = "none";
+          }, 600);
+        }, 1500);
+      }
+
+      function showButtonLoading() {
+        const button = document.getElementById("generateButton");
+        const buttonText = document.getElementById("buttonText");
+        const buttonSpinner = document.getElementById("buttonSpinner");
+
+        button.disabled = true;
+        button.style.opacity = "0.8";
+        button.style.transform = "scale(0.95)";
+        buttonText.style.display = "none";
+        buttonSpinner.style.display = "inline-block";
+      }
+
+      function hideButtonLoading() {
+        const button = document.getElementById("generateButton");
+        const buttonText = document.getElementById("buttonText");
+        const buttonSpinner = document.getElementById("buttonSpinner");
+
+        buttonSpinner.style.display = "none";
+        buttonText.style.display = "inline-block";
+        button.disabled = false;
+        button.style.opacity = "1";
+        button.style.transform = "scale(1)";
+      }
+
+      // Function to open result in new tab
+      function openResult() {
+        if (currentGeneratedLink) {
+          const button = document.getElementById("openResultButton");
+          const originalText = button.innerHTML;
+          button.innerHTML = "🚀 Đang mở...";
+
+          window.open(currentGeneratedLink, "_blank");
+
+          setTimeout(() => {
+            button.innerHTML = "✅ Đã mở!";
+            setTimeout(() => {
+              button.innerHTML = originalText;
+            }, 1500);
+          }, 500);
+        } else {
+          alert(
+            "💕 Ôi không! Chưa có link thần kỳ để mở. Hãy thử tạo lại nhé!"
+          );
+        }
+      }
+
+      // Function to create a short ID for the link
+      function createShortId(data) {
+        // Use CryptoJS to create a unique hash based on the data and a timestamp
+        const timestamp = new Date().getTime();
+        const dataString = JSON.stringify(data) + timestamp;
+        const hash = CryptoJS.MD5(dataString).toString();
+        // Return a shorter version of the hash (e.g., first 8 characters)
+        return hash.substring(0, 8);
+      }
+
+      // Handle Generate Link with synchronized loading
+      function handleGenerateLink() {
+        showButtonLoading();
+        const interval = showProgress();
+
+        // Synchronize loading with actual link generation
+        setTimeout(() => {
+          generateLink(); // Generate link first
+          setTimeout(() => {
+            hideProgress(interval); // Then hide loading
+            hideButtonLoading();
+          }, 500); // Small delay to see the result
+        }, 2000); // Reduced to 2 seconds for better UX
+      }
+
+      // Initialize toggleCustomImageInput on page load to handle initial state
+      document.addEventListener("DOMContentLoaded", function () {
+        toggleCustomImageInput(); // Ensure preview is set correctly on load
+        // Tải LZString cho nén/giải nén
+        const script = document.createElement("script");
+        script.src = "./assets/lz-string.min.js";
+        document.head.appendChild(script);
+      });
+    </script>
+
+    <!-- Close the body and html tags -->
+  </body>
+</html>
