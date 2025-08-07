@@ -125,37 +125,25 @@ window.addEventListener("orientationchange", () => {
 checkOrientation();
 
 // Canvas setup cho hiệu ứng chữ và trái tim
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-// Đặt khai báo isMobile lên trên để tránh lỗi ReferenceError
 const isMobile =
   /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
   window.innerWidth < 768;
 
-// Mobile-specific canvas optimizations
-if (isMobile) {
-  // Use lower resolution for mobile to improve performance
-  const pixelRatio = Math.min(window.devicePixelRatio, 2);
-  canvas.width = window.innerWidth * pixelRatio;
-  canvas.height = window.innerHeight * pixelRatio;
-  canvas.style.width = window.innerWidth + "px";
-  canvas.style.height = window.innerHeight + "px";
-  ctx.scale(pixelRatio, pixelRatio);
-
-  // Optimize canvas context for mobile
-  ctx.imageSmoothingEnabled = false;
-  ctx.webkitImageSmoothingEnabled = false;
-} else {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-
-// Ensure canvas is properly configured
+// Luôn dùng kích thước canvas cố định để text luôn ở giữa
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+canvas.style.width = window.innerWidth + "px";
+canvas.style.height = window.innerHeight + "px";
 canvas.style.position = "fixed";
 canvas.style.top = "0";
 canvas.style.left = "0";
 canvas.style.zIndex = "100";
 canvas.style.pointerEvents = "none";
+ctx.imageSmoothingEnabled = false;
+ctx.webkitImageSmoothingEnabled = false;
 
 // Enhanced mobile performance detection
 const isLowEndDevice =
@@ -163,10 +151,11 @@ const isLowEndDevice =
 const gap = isMobile ? 4 : 8; // Reduced gap for better mobile performance
 
 // Performance optimization settings
+
 const performanceMode = isMobile || isLowEndDevice;
-const maxParticles = performanceMode ? 800 : 2000;
-const animationFPS = performanceMode ? 30 : 60;
-const sparkleFrequency = performanceMode ? 0.01 : 0.03;
+const maxParticles = performanceMode ? 400 : 1200; // Giảm mạnh cho mobile
+const animationFPS = performanceMode ? 24 : 60; // Giảm FPS cho mobile
+const sparkleFrequency = performanceMode ? 0.008 : 0.02; // Giảm tần suất
 
 const shapeCanvas = document.createElement("canvas");
 if (isMobile) {
@@ -412,63 +401,40 @@ let stopAnimation = false;
 let isCountdownPhase = true; // Track nếu đang trong phase countdown
 
 // Font fitting function - Enhanced for mobile readability
+
 function getFittedFont(text) {
   const isCountdown = ["3", "2", "1"].includes(text.trim());
-  let fontSize = isCountdown ? 400 : 300;
-
-  // Use modern, readable fonts instead of system fonts
-  const fontFamily = isCountdown
-    ? '"Inter", "Quicksand", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
-    : '"Quicksand", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-
+  let fontSize = isCountdown ? (isMobile ? 120 : 200) : isMobile ? 60 : 120;
+  const fontFamily =
+    '"Quicksand", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
   shapeCtx.font = `bold ${fontSize}px ${fontFamily}`;
   let textWidth = shapeCtx.measureText(text.replace("\n", "")).width;
-
-  // Adjust for mobile screens
-  const maxWidth = isMobile
-    ? 0.85 * shapeCanvas.width
-    : 0.9 * shapeCanvas.width;
+  const maxWidth = isMobile ? 0.8 * shapeCanvas.width : 0.7 * shapeCanvas.width;
   const maxHeight = isMobile
-    ? 0.7 * shapeCanvas.height
-    : 0.8 * shapeCanvas.height;
-
-  while (
-    (textWidth > maxWidth || fontSize > maxHeight) &&
-    fontSize > (isMobile ? 20 : 10)
-  ) {
-    fontSize -= isMobile ? 8 : 5;
+    ? 0.3 * shapeCanvas.height
+    : 0.4 * shapeCanvas.height;
+  while ((textWidth > maxWidth || fontSize > maxHeight) && fontSize > 16) {
+    fontSize -= isMobile ? 4 : 8;
     shapeCtx.font = `bold ${fontSize}px ${fontFamily}`;
     textWidth = shapeCtx.measureText(text.replace("\n", "")).width;
   }
-
   return { fontSize, fontFamily };
 }
 
 // Generate dots from text - Enhanced with better fonts
+
 function generateDots(text) {
   shapeCtx.clearRect(0, 0, shapeCanvas.width, shapeCanvas.height);
-
   const textLines = text.split("\n");
   const { fontSize, fontFamily } = getFittedFont(text);
-  const isCountdown = ["3", "2", "1"].includes(text.trim());
-
   shapeCtx.font = `bold ${fontSize}px ${fontFamily}`;
   shapeCtx.fillStyle = "#fff";
   shapeCtx.textAlign = "center";
   shapeCtx.textBaseline = "middle";
-
-  // Add text shadow for better readability on mobile
-  if (isMobile) {
-    shapeCtx.shadowColor = "rgba(0,0,0,0.5)";
-    shapeCtx.shadowBlur = 4;
-    shapeCtx.shadowOffsetX = 2;
-    shapeCtx.shadowOffsetY = 2;
-  }
-
-  const lineHeight = fontSize * (isCountdown ? 1.1 : 1.2);
+  // Không dùng shadow để tránh lag
+  const lineHeight = fontSize * 1.1;
   const totalHeight = lineHeight * textLines.length;
   const startY = shapeCanvas.height / 2 - totalHeight / 2 + lineHeight / 2;
-
   for (let i = 0; i < textLines.length; i++) {
     shapeCtx.fillText(
       textLines[i],
@@ -476,7 +442,6 @@ function generateDots(text) {
       startY + i * lineHeight
     );
   }
-
   const imageData = shapeCtx.getImageData(
     0,
     0,
@@ -484,16 +449,16 @@ function generateDots(text) {
     shapeCanvas.height
   ).data;
   const dots = [];
-
-  for (let y = 0; y < shapeCanvas.height; y += gap) {
-    for (let x = 0; x < shapeCanvas.width; x += gap) {
+  // Giảm gap cho mobile để giảm số lượng particles
+  const dotGap = isMobile ? 8 : gap;
+  for (let y = 0; y < shapeCanvas.height; y += dotGap) {
+    for (let x = 0; x < shapeCanvas.width; x += dotGap) {
       const alpha = imageData[(y * shapeCanvas.width + x) * 4 + 3];
       if (alpha > 128) {
         dots.push({ x: x, y: y });
       }
     }
   }
-
   return dots;
 }
 
@@ -1202,43 +1167,31 @@ function drawWhiteSparklesOptimized() {
 }
 
 // Main text animation loop
+
 let animationFrameCount = 0;
 function animate() {
   if (stopAnimation) {
-    console.log("🛑 Animation stopped");
     return;
   }
-
   animationFrameCount++;
-
   updateParticles();
   drawParticles();
-
   const allParticlesReached = particles.every(
-    (p) => Math.abs(p.x - p.tx) < 0.5 && Math.abs(p.y - p.ty) < 0.5
+    (p) => Math.abs(p.x - p.tx) < 1 && Math.abs(p.y - p.ty) < 1
   );
-
-  // Dynamic delay: nhanh cho countdown, chậm cho messages
-  const currentDelay = isCountdownPhase ? 800 : morphDelay; // 800ms cho countdown, 500ms cho messages
-
+  const currentDelay = isCountdownPhase ? 700 : morphDelay;
   if (allParticlesReached && Date.now() - lastMorphTime > currentDelay) {
-    console.log(
-      "🔄 Morphing to next text...",
-      isCountdownPhase ? "(Countdown)" : "(Message)"
-    );
     morphToNextText();
   }
-
-  // Adaptive FPS based on device performance
+  // Giảm FPS cho mobile
   const frameDelay = performanceMode ? Math.floor(1000 / animationFPS) : 16;
-
   setTimeout(() => {
     requestAnimationFrame(animate);
   }, frameDelay);
 }
 
 // Initialize animation
-console.log("🎬 Initializing animation with first text:", texts[0]);
+
 const firstDots = generateDots(texts[0]);
 particles = firstDots.map((dot) => ({
   x: canvas.width / 2,
@@ -1246,36 +1199,21 @@ particles = firstDots.map((dot) => ({
   tx: dot.x,
   ty: dot.y,
   progress: 0,
-  speed: 0.1 + 0.08 * Math.random(),
+  speed: 0.08 + 0.05 * Math.random(),
 }));
-
 canvas.style.display = "none";
-
-// Start animation
 setTimeout(() => {
-  console.log("🎬 Starting canvas animation!");
-  console.log("🎨 Canvas element:", canvas);
-  console.log("📏 Canvas dimensions:", canvas.width, "x", canvas.height);
-  console.log("🔤 First text to animate:", texts[0]);
-  console.log("🔵 Number of particles:", particles.length);
-
   canvas.style.display = "block";
   canvas.style.zIndex = "1000";
   canvas.style.position = "fixed";
   canvas.style.top = "0";
   canvas.style.left = "0";
-
-  console.log("✅ Canvas should be visible now with styles:", {
-    display: canvas.style.display,
-    zIndex: canvas.style.zIndex,
-    position: canvas.style.position,
-  });
-
   lastMorphTime = Date.now();
   animate();
-}, 1000);
+}, 600);
 
 // Handle resize
+
 window.addEventListener("resize", () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
