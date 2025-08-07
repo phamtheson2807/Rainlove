@@ -16,6 +16,7 @@
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <!-- QRCode with multiple fallbacks -->
+    <script src="assets/lz-string.min.js"></script>
     <script>
       // QRCode loading with multiple sources
       function loadQRCodeLibrary() {
@@ -1378,6 +1379,9 @@ Chúc mừng|sinh nhật|bạn yêu|💕</textarea
           // Clear custom image when selecting dropdown
           customImageInput.value = "";
           showHeartEffect();
+          // Hide other effects
+          hideSparkleHeartEffect();
+          gifPreview.style.display = "none";
         } else if (gifSelect.value === "sparkle-heart-effect") {
           console.log("💝 Sparkle heart effect selected");
           customImageGroup.style.display = "none";
@@ -1385,6 +1389,8 @@ Chúc mừng|sinh nhật|bạn yêu|💕</textarea
           customImageInput.value = "";
           hideHeartEffect();
           showSparkleHeartEffect();
+          // Hide other effects
+          gifPreview.style.display = "none";
         } else if (gifSelect.value === "") {
           console.log(
             "❌ No dropdown effect selected, showing custom image input"
@@ -1392,6 +1398,7 @@ Chúc mừng|sinh nhật|bạn yêu|💕</textarea
           customImageGroup.style.display = "block";
           hideHeartEffect();
           hideSparkleHeartEffect();
+          gifPreview.style.display = "none";
         } else {
           console.log("🖼️ GIF effect selected:", gifSelect.value);
           customImageGroup.style.display = "none";
@@ -1414,6 +1421,9 @@ Chúc mừng|sinh nhật|bạn yêu|💕</textarea
             gifImage.style.opacity = "1";
             gifImage.style.transform = "scale(1) rotate(0deg)";
           }, 100);
+          // Hide other effects
+          heartPreview.style.display = "none";
+          if (sparkleHeartPreview) sparkleHeartPreview.style.display = "none";
         }
       }
 
@@ -2676,17 +2686,51 @@ Chúc mừng|sinh nhật|bạn yêu|💕</textarea
           setTimeout(() => {
             hideProgress(interval); // Then hide loading
             hideButtonLoading();
+            // Show effect preview only after message/link is generated
+            showSelectedEffectPreview();
           }, 500); // Small delay to see the result
         }, 2000); // Reduced to 2 seconds for better UX
+        // Show effect preview only after message generation
+        function showSelectedEffectPreview() {
+          const gifSelect = document.getElementById("gif");
+          const gifPreview = document.getElementById("gifPreview");
+          const heartPreview = document.getElementById("heartPreview");
+          const sparkleHeartPreview = document.getElementById(
+            "sparkleHeartPreview"
+          );
+          // Hide all previews first
+          gifPreview.style.display = "none";
+          heartPreview.style.display = "none";
+          if (sparkleHeartPreview) sparkleHeartPreview.style.display = "none";
+          // Show only the selected effect
+          if (gifSelect.value === "heart-effect") {
+            showHeartEffect();
+          } else if (gifSelect.value === "sparkle-heart-effect") {
+            showSparkleHeartEffect();
+          } else if (gifSelect.value === "") {
+            // No effect selected, do nothing
+          } else {
+            // GIF selected
+            gifPreview.style.display = "block";
+            gifPreview.classList.add("active");
+            const gifImage = document.getElementById("gifImage");
+            gifImage.src = gifSelect.value;
+            gifImage.style.opacity = "0";
+            gifImage.style.transform = "scale(0.8) rotate(-5deg)";
+            setTimeout(() => {
+              gifImage.style.transition =
+                "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+              gifImage.style.opacity = "1";
+              gifImage.style.transform = "scale(1) rotate(0deg)";
+            }, 100);
+          }
+        }
       }
 
       // Initialize toggleCustomImageInput on page load to handle initial state
       document.addEventListener("DOMContentLoaded", function () {
         toggleCustomImageInput(); // Ensure preview is set correctly on load
-        // Tải LZString cho nén/giải nén
-        const script = document.createElement("script");
-        script.src = "./assets/lz-string.min.js";
-        document.head.appendChild(script);
+        // LZString is already loaded in <head>, no need to load again
       });
     </script>
 

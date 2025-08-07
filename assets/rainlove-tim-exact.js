@@ -217,9 +217,13 @@ if (urlParams.has("data")) {
       encodedData.substring(0, 50) + "..."
     );
 
-    const decodedData = decodeURIComponent(atob(encodedData));
-    console.log("📄 Decoded data:", decodedData);
-    const data = JSON.parse(decodedData);
+    // Giải mã đúng chuẩn LZString
+    const compressed = decodeURIComponent(encodedData);
+    const json = window.LZString
+      ? LZString.decompressFromBase64(compressed)
+      : null;
+    console.log("📄 Decoded data:", json);
+    const data = json ? JSON.parse(json) : {};
 
     if (data.msg && data.msg.trim()) {
       inputText = data.msg;
